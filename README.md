@@ -1,7 +1,7 @@
 # IoT-Fatigue-Detection
 ### 系級：資管三B   學號：112403037   姓名：黃姵慈
 
-![成果照片](https://hackmd.io/_uploads/rJMk1MYda.jpg)
+![成果照片]()
 
 ## 目錄
 - [專案簡介](#專案簡介)
@@ -48,7 +48,7 @@
 
 ## 作品圖片及影片
 ### 成品
-![成果照片](https://hackmd.io/_uploads/rJMk1MYda.jpg)
+![成果照片]()
 ### Demo 影片
 [![video_thumbnail](URL)](YouTube URL)
 
