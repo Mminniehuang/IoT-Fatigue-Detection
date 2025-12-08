@@ -63,7 +63,7 @@
 
 |元件  |說明|
 |-----|----|
-|Raspberry Pi 4 Model B|邊緣計算核心|
+|Raspberry Pi 4|邊緣計算核心|
 |Pi Camera Module V2 NOIR (標準 FOV)|影像輸入|
 |有源蜂鳴器 (Active Buzzer)|本地警報輸出|
 |有線耳機|語音輸出|
@@ -186,7 +186,7 @@
 1. 相機設置
 ![架構圖]()
 
-3. 提取關鍵點
+2. 提取關鍵點
 >```bash
 ># --- DLIB 68 點地標索引定義 ---
 >LEFT_EYE_START, LEFT_EYE_END = 42, 48 # 左眼 6 點
@@ -203,8 +203,9 @@
 ># 提取關鍵點
 >left_eye, right_eye, mouth = extract_key_points(landmarks)
 >```
-4. 計算核心指標
->EAR、MAR 計算公式定義   參考
+3. 計算核心指標
+>EAR、MAR 計算公式定義
+>參考：
 >```bash
 ># 計算眼睛縱橫比 (EAR)
 >def calculate_ear(eye):
@@ -227,7 +228,7 @@
 >EAR_AVG = (left_ear + right_ear) / 2.0
 >MAR = calculate_mar(mouth)
 >```
-6. CV2 視窗，顯示狀態資訊
+4. CV2 視窗，顯示狀態資訊
 >```bash
 >score_color = (0, 255, 0) 
 >if score < 70: score_color = (0, 255, 255) # 後續根據實測結果修正
@@ -359,7 +360,7 @@ Web 服務需在 `web_env` 中運行，每 10 秒讀取 Google Sheets CSV 進行
 >        print(f"【數據錯誤】處理試算表時發生錯誤: {e}") 
 >```
 
-3. 套用 HTML 模板 (`templates/index.html`)
+2. 套用 HTML 模板 (`templates/index.html`)
 網站前端顯示所有數據，並使用 Chart.js 繪製歷史趨勢圖
 
 
