@@ -1,7 +1,7 @@
 # IoT-Fatigue-Detection
 ### 系級：資管三B   學號：112403037   姓名：黃姵慈
 
-![成果照片]()
+![成果照片](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E5%B0%81%E9%9D%A2.jpg)
 
 ## 目錄
 - [專案簡介](#專案簡介)
@@ -86,10 +86,10 @@
 - 進程 B (Web Server) : 運行在 web_env 虛擬環境，負責低衝突的網路服務 (Flask, Sheets API)
 - 數據交換： 兩個進程之間通過 Google Sheets (資料庫) 進行間接交流。
 
-![架構圖]()
+![架構圖](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E6%9E%B6%E6%A7%8B%E5%9C%96.jpg)
 
 ### 電路圖
-![電路圖]()
+![電路圖](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E9%9B%BB%E8%B7%AF%E5%9C%96.jpg)
 
 
 
