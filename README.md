@@ -306,7 +306,7 @@ $\rightarrow$ 將 FORM_URL 和 欄位 ID 貼入 firestore_logging.py
 >}
 >```
 
-3. 數據紀錄 (`firestore_logging.py`)
+2. 數據紀錄 (`firestore_logging.py`)
 將警報數據 POST 到 Google Forms，實現雲端持久化
 >```bash
 >def log_alert_to_firestore(alert_type, score, details=""):
@@ -333,7 +333,7 @@ $\rightarrow$ 將 FORM_URL 和 欄位 ID 貼入 firestore_logging.py
 >```
 
 
-4. 數據匯出
+3. 數據匯出
 獲取 Google Sheets 的 CSV 匯出連結
 - 打開 Google Sheets (表單回應的試算表)
 - 導航： 點擊 「檔案 (File)」 $\rightarrow$ 「分享 (Share)」 $\rightarrow$ 「發佈到網路 (Publish to the web)」
