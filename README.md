@@ -48,9 +48,11 @@
 
 ## 作品圖片及影片
 ### 成品
-![成果照片]()
+![成果照片1](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E6%88%90%E6%9E%9C1.jpg)
+![成果照片2](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E6%88%90%E6%9E%9C2.jpg)
+![成果照片3](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E6%88%90%E6%9E%9C3.jpg)
 ### Demo 影片
-[![video_thumbnail](URL)](YouTube URL)
+[![Demo Vedio](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E5%B0%81%E9%9D%A2.jpg)](https://youtu.be/RvWwCN5MOz0)
 
 
 
@@ -103,6 +105,7 @@
 ### 3. Base OS：運行 DLIB 核心所必需的環境
 #### 安裝 opencv
 用於讀取 Pi Camera 影像 (cv2.imshow, cv2.waitKey)、在影像上繪製地標點與 FPS 數值
+
 參考：[https://hackmd.io/HV6hQ2PHSiWlrRsfxC10SA](https://hackmd.io/HV6hQ2PHSiWlrRsfxC10SA)
 >安裝CMack  
 >```bash
@@ -127,6 +130,8 @@
 
 #### 安裝 dlib 庫
 用於臉部地標偵測，dlib 提供 68 個地標座標
+
+參考：[https://github.com/yuxuankuu/IoT-RPi-Project/tree/main](https://github.com/yuxuankuu/IoT-RPi-Project/tree/main)
 >安裝編譯依賴項
 >```bash
 >sudo apt update
@@ -146,6 +151,8 @@
 
 #### 安裝 TTS 及播放器
 用於語音合成 (將文本轉換為 MP3)、音頻播放
+
+參考：[https://github.com/Eddie114114/IOT_final/tree/main](https://github.com/Eddie114114/IOT_final/tree/main)
 >安裝 gTTS (Text-to-Speech 庫)
 >```bash
 >pip3 install gTTS
@@ -184,7 +191,9 @@
 
 ## STEP1-實作臉部偵測與分數機制
 1. 相機設置
-![架構圖]()
+
+確保「RPi已關機」後，將鏡頭模組電纜插入 RPi 的鏡頭模組接口
+![相機](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E7%9B%B8%E6%A9%9F.jpg)
 
 2. 提取關鍵點
 >```bash
@@ -262,8 +271,9 @@
 
 ## STEP2-本地警報設置
 1. 蜂鳴器接線
+   
 蜂鳴器正極 (+) 接 RPi GPIO 26；負極 (-) 接 RPi GND
-![蜂鳴器接線]()
+![蜂鳴器](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E8%9C%82%E9%B3%B4%E5%99%A8.jpg)
 2. 核心警報邏輯
 ```bash
 if self.current_score < 40:
@@ -283,7 +293,7 @@ elif self.current_score < 70:
 - 創建一個新的 Google 表單
 - 建立以下三個「簡答」問題：Alert Type、Safety Score、Timestamp
 - 獲取 POST URL 及 欄位 ID ：點擊表單右上角的「傳送」 (Send) $\rightarrow$ 點擊 < > 嵌入 HTML 圖標 $\rightarrow$ 在程式碼中找到完整 URL 以及每個問題的 name 屬性)
-  
+![Google Form](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/Google%20Form.jpg)
 $\rightarrow$ 將 FORM_URL 和 欄位 ID 貼入 firestore_logging.py
 >```bash
 ># 1. Google 表單的提交 URL (Action URL from 'Embed HTML' share option)
@@ -331,7 +341,7 @@ $\rightarrow$ 將 FORM_URL 和 欄位 ID 貼入 firestore_logging.py
 - 將下拉選單中 「整個文件 (Entire Document)」 更改為 「表單回應工作表」
 - 將格式從 「網頁」 更改為 「逗號分隔值 (.csv)」
 - 點擊 「發佈 (Publish)」，複製生成的 CSV 連結
-
+![Google Sheet](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/Google%20Sheet.jpg)
 $\rightarrow$ 這個連結將用於網站 `web_server.py` 中，供網站讀取數據。
 
 
@@ -375,6 +385,7 @@ Web 服務需在 `web_env` 中運行，每 10 秒讀取 Google Sheets CSV 進行
 預測邏輯：依據「前一天同一小時內」是否有警報紀錄，判斷騎士在當前時間區間的高風險疲勞傾向
 
 0. 如果要啟用語音功能，RPi4 必須正確配置音頻輸出至喇叭或耳機：
+![耳機](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/%E8%80%B3%E6%A9%9F.jpg)
 >確認音頻輸出裝置
 >```bash
 >sudo raspi-config
