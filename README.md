@@ -61,7 +61,7 @@
 ---
 
 ## 元件清單
-![元件]()
+![元件](https://github.com/Mminniehuang/IoT-Fatigue-Detection/blob/main/images/元件.jpg)
 
 |元件  |說明|
 |-----|----|
