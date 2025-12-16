@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-專案: 外送員疲勞偵測系統
-檔案: fatigue_utils.py
-目的: 包含 EAR/MAR 幾何計算、地標點提取，以及 Safety Score 的 FatigueState 邏輯。
-      **已實作 MAR 累積次數追蹤 (滾動窗口)**
+fatigue_utils.py
+包含 EAR/MAR 幾何計算、地標點提取，以及 Safety Score 的 FatigueState 邏輯。
 """
 import numpy as np
 from scipy.spatial import distance as dist
