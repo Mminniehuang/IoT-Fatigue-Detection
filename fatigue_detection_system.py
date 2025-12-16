@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-專案: 外送員疲勞偵測系統
-檔案: fatigue_detection_system.py
-目的: 整合 DLIB 核心邏輯、Safety Score 判斷、蜂鳴器警報，以及 TTS 語音提醒。
-      **已修正：加入「每小時鎖定」機制，防止語音提醒重複播放。**
+fatigue_detection_system.py
+整合 DLIB 核心邏輯、Safety Score 判斷、蜂鳴器警報，以及 TTS 語音提醒。
 """
 import numpy as np
 import cv2
