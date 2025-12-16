@@ -214,7 +214,8 @@
 >```
 3. 計算核心指標
 >EAR、MAR 計算公式定義
->參考：
+>
+>參考：[https://pyimagesearch.com/2017/04/24/eye-blink-detection-opencv-python-dlib/](https://pyimagesearch.com/2017/04/24/eye-blink-detection-opencv-python-dlib/)
 >```bash
 ># 計算眼睛縱橫比 (EAR)
 >def calculate_ear(eye):
@@ -500,9 +501,10 @@ python3 fatigue_detection_system.py
 ---
 
 ## 可以改善的地方
-1. 性能提升：DLIB 運行在 CPU 上速度較慢 ($\sim 5 \text{ FPS}$)。未來可嘗試使用 OpenCV DNN 模塊載入優化後的 Dlib 權重，或使用 NCS2 加速一個兼容的 CNN 地標模型。
-2. 數據魯棒性：增加人臉追踪器 (Tracker) 來穩定 Dlib 邊界框，減少地標跳動。
-3. 語音輸出：語音提醒的內容可以根據疲勞的嚴重程度和哈欠次數進行動態調整。
+1. 運算性能提升：選用的 DLIB 地標模型運行在 RPi4 CPU 上速度較慢 ($\sim 5 \text{ FPS}$)。未來可嘗試整合 DLIB 與 NCS2 不兼容的問題，實現更穩定的實時偵測。
+2. 鏡頭視野：目前使用的一般鏡頭模組，畫面範圍有限，可能因騎士頭部動作或臉部大小等差異而出現偵測不到的狀況。未來可以嘗試使用廣角鏡頭或優化偵測演算法處理此問題。
+3. 預測語音輸出：語音提醒的規則和內容目前較單一，可以納入語言模型，根據統計結果 (包括疲勞嚴重程度、次數多寡等) 進行更準確和個人化的語音提醒。
+4. 延伸功能：可增加偵測是否有戴安全帽 (紅外線或壓力感測)、酒精檢測等更多元化的安全輔助功能。
 
 
 
@@ -511,8 +513,24 @@ python3 fatigue_detection_system.py
 
 ## 參考資料
 
-1.  **Soukupová, T., & Čech, J. (2016).** *Real-Time Eye Blink Detection using Facial Landmarks.* (EAR 核心公式的基礎).
-2.  **Rosebrock, A.** *Eye Blink Detection with OpenCV, Python, and dlib.* (DLIB 68 點實作與 EAR 閾值應用).
-3.  **Google Developers.** *gTTS Library Documentation* (TTS 語音合成服務).
-4.  **Google Cloud Platform.** *Google Sheets API V4 Documentation* (數據讀取和寫入的底層原理).
-5.  **Kildall, Scott.** *Raspberry Pi GPIO Pinout Guide* (GPIO 和電子元件接線基礎)。
+1.  類似專案
+
+    *https://circuitdigest.com/microcontroller-projects/smart-helmet-using-arduino*
+2.  EAR/MAR核心
+
+    - **Soukupová, T., & Čech, J. (2016).** *Real-Time Eye Blink Detection using Facial Landmarks.* (EAR 核心公式的基礎).
+
+    - **Rosebrock, A.** *Eye Blink Detection with OpenCV, Python, and dlib.* (DLIB 68 點實作與 EAR 閾值應用).
+3.  環境設定參考
+    - *https://hackmd.io/HV6hQ2PHSiWlrRsfxC10SA*
+    
+    - *https://github.com/yuxuankuu/IoT-RPi-Project/tree/main*
+    
+    - *https://github.com/yuxuankuu/IoT-RPi-Project/tree/main*
+    
+    - *https://github.com/Eddie114114/IOT_final/tree/main*
+4.  雲端與網路服務
+   
+    - **Google Developers.** *gTTS Library Documentation* (TTS 語音合成服務).
+    
+    - **Google Cloud Platform.** *Google Sheets API V4 Documentation* (數據讀取和寫入的底層原理).
