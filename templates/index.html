@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外送員安全數據中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .card-shadow { box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+    </style>
+    <!-- [修正點 1]: 增加自動刷新功能，讓網站每 10 秒獲取新數據 -->
+    <script>
+        function refreshPage() {
+            window.location.reload();
+        }
+        // 每 10 秒刷新一次頁面
+        setTimeout(refreshPage, 10000); 
+    </script>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="text-center mb-10">
+        <h1 class="text-4xl font-extrabold text-gray-900">車隊安全管理儀表板</h1>
+        <p class="text-gray-500 mt-2">數據來源：Google Sheets / 更新時間：{{ last_update }} (每 10 秒刷新一次)</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto">
+        
+        <!-- 1. 騎士狀態總覽 -->
+        <h2 class="text-2xl font-bold text-gray-700 mb-4">騎士狀態總覽</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {% for rider in rider_stats %}
+            {% set color = {'safe': 'bg-green-100 border-green-500 text-green-700', 'warning': 'bg-yellow-100 border-yellow-500 text-yellow-700', 'critical': 'bg-red-100 border-red-500 text-red-700'} %}
+            
+            <div class="p-6 rounded-xl border-l-4 card-shadow {{ color[rider.safety_level] }}">
+                <h3 class="text-xl font-bold">{{ rider.Rider_ID }}</h3>
+                <p class="text-sm font-semibold mb-3">{{ {'safe': '狀態安全', 'warning': '疲勞累積', 'critical': '臨界危險'}[rider.safety_level] }}</p>
+                
+                <div class="text-5xl font-extrabold">{{ rider.latest_score }}</div>
+                <p class="mt-2 text-sm">總警報次數: {{ rider.total_alerts }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 2. 數據視覺化 (趨勢圖表) -->
+        <h2 class="text-2xl font-bold text-gray-700 mb-4">近期 Safety Score 趨勢圖</h2>
+        <div class="bg-white p-6 rounded-xl card-shadow">
+            <canvas id="scoreChart"></canvas>
+        </div>
+        
+        <!-- 3. 詳細記錄 (最近的警報紀錄) -->
+        <h2 class="text-2xl font-bold text-gray-700 mt-10 mb-4">警報事件紀錄 (最近 {{ recent_logs | length }} 筆)</h2>
+        <div class="bg-white rounded-xl card-shadow overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">時間戳記</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">分數</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">警報類型 / 詳細資訊</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for log in recent_logs %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ log.Timestamp }}</td> 
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold {{ 'text-red-600' if log['Safety Score'] < 40 else ('text-yellow-600' if log['Safety Score'] < 70 else 'text-green-600') }}">
+                            {{ log['Safety Score'] }}
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 max-w-sm overflow-hidden truncate">
+                            {{ log['Alert Type'] }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // [關鍵修正]: 使用 | default([], true) 確保 recent_logs 永遠是一個列表，避免 Undefined 錯誤
+        const recentLogs = {{ recent_logs | default([], true) | tojson | safe }}; 
+        
+        // --- 圖表腳本 ---
+        const scores = recentLogs.map(log => log['Safety Score']);
+        
+        // 提取時間 
+        const labels = recentLogs.map(log => {
+             const parts = log.Timestamp.split(' ');
+             return parts.length > 1 ? parts.slice(-1)[0] : parts[0]; 
+        });
+
+        // 初始化圖表
+        const ctx = document.getElementById('scoreChart').getContext('2d');
+        const scoreChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Safety Score Trend',
+                    data: scores,
+                    borderColor: 'rgb(103, 58, 183)',
+                    backgroundColor: 'rgba(103, 58, 183, 0.1)',
+                    tension: 0.3,
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 100,
+                        title: { display: true, text: 'Safety Score' }
+                    },
+                    x: {
+                         title: { display: true, text: 'Time of Day (HH:MM:SS)' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Safety Score 變動趨勢 (最近紀錄)' }
+                }
+            }
+        });
+        
+        // [修正點 3]: 實現網頁自動重載
+        setTimeout(function() {
+            window.location.reload();
+        }, 10000); 
+    </script>
+</body>
+</html>
