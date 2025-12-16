@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-專案: 外送員疲勞偵測系統
-檔案: web_server.py
-目的: 運行 Flask 網站，從 Google Sheets CSV 鏈接讀取疲勞數據並計算排行榜。
-      **最終穩定版：只檢查「前一天同一小時」是否有警報。**
+web_server.py
+運行 Flask 網站，從 Google Sheets CSV 鏈接讀取疲勞數據並計算。
 """
 from flask import Flask, render_template, jsonify
 import requests
