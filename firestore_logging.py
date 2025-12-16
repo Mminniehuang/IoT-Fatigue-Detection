@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-專案: 外送員疲勞偵測系統
-檔案: firestore_logging.py
-目的: 使用 Google Forms API 處理數據紀錄。
+firestore_logging.py
+使用 Google Forms API 處理數據紀錄。
 """
 import requests
 import json
