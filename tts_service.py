@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-專案: 外送員疲勞偵測系統
-檔案: tts_service.py
-目的: 處理語音提醒的生成與播放 (gTTS 和 mpg321)。
+tts_service.py
+處理語音提醒的生成與播放 (gTTS 和 mpg321)。
 """
 from gtts import gTTS
 import os
